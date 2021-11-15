@@ -57,7 +57,7 @@ defmodule QuizTest do
   defp right_answer(quiz), do: answer_question(quiz, "3")
   defp wrong_answer(quiz), do: answer_question(quiz, "wrong")
 
-  defp answer_question(quiz, answer) do
+  def answer_question(quiz, answer) do
     email = "mathy@example.com"
     response = Response.new(quiz, email, answer)
     Quiz.answer_question(quiz, response)
