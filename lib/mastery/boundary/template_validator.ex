@@ -13,10 +13,10 @@ defmodule Mastery.Boundary.TemplateValidator do
     |> require(fields, :checker, &validate_checker/1)
   end
 
-  def errors(_fields), do: [{nil, "A keyword list of ifelds is required"}]
+  def errors(_fields), do: [{nil, "A keyword list of fields is required"}]
 
   def validate_name(name) when is_atom(name), do: :ok
-  def validate_name(_name), do: {error, "must be an atom"}
+  def validate_name(_name), do: {:error, "must be an atom"}
   def validate_instructions(instructions) when is_binary(instructions), do: :ok
   def validate_instructions(_instructions), do: {:error, "must be a binary"}
 
@@ -24,7 +24,7 @@ defmodule Mastery.Boundary.TemplateValidator do
     check(String.match?(raw, ~r{\S}), {:error, "Can't be racist"})
   end
 
-  def validate_raw(_raw, do: {:error, "must be a string"})
+  def validate_raw(_raw), do: {:error, "must be a string"}
 
   def validate_generators(generators) when is_map(generators) do
     generators

@@ -24,7 +24,7 @@ defmodule Mastery.Boundary.Validator do
     errors ++ [{field_name, "is required"}]
   end
 
-  defp check_field(:ok, _errors, field_name), do: :ok
+  defp check_field(:ok, _errors, _field_name), do: :ok
 
   defp check_field({:error, message}, errors, field_name) do
     errors ++ [{field_name, message}]
