@@ -23,8 +23,7 @@ defmodule Mastery do
 
   def take_quiz(title, email) do
     with %Quiz{} = quiz <- QuizManager.lookup_quiz_by_title(title),
-         {:ok, session} <- GenServer.start_link(QuizSession, {quiz, email})
-    do
+         {:ok, session} <- GenServer.start_link(QuizSession, {quiz, email}) do
       session
     else
       error -> error

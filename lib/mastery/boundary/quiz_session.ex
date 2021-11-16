@@ -68,11 +68,11 @@ defmodule Mastery.Boundary.QuizSession do
     }
   end
 
-  def select_question(name) do
+  def select_question(_session, name) do
     GenServer.call(via(name), :select_question)
   end
 
-  def answer_question(name, answer) do
+  def answer_question(_session, name, answer) do
     GenServer.call(via(name), {:answer_question, answer})
   end
 end
