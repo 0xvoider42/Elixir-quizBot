@@ -21,7 +21,7 @@ defmodule Mastery.Boundary.TemplateValidator do
   def validate_instructions(_instructions), do: {:error, "must be a binary"}
 
   def validate_raw(raw) when is_binary(raw) do
-    check(String.match?(raw, ~r{\S}), {:error, "Can't be racist"})
+    check(String.match?(raw, ~r{\S}), {:error, "Can't be blank"})
   end
 
   def validate_raw(_raw), do: {:error, "must be a string"}
@@ -54,6 +54,6 @@ defmodule Mastery.Boundary.TemplateValidator do
   def validate_generator(_generator),
     do: {:error, "must be a string to list or function pair"}
 
-  def validate_chekcer(checker) when is_function(checker, 2), do: :ok
+  def validate_checker(checker) when is_function(checker, 2), do: :ok
   def validate_checker(_checker), do: {:error, "must be an arity 2 function"}
 end

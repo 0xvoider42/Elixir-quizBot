@@ -43,4 +43,8 @@ defmodule Mastery.Boundary.QuizManager do
   def lookup_quiz_by_title(manager \\ __MODULE__, quiz_title) do
     GenServer.call(manager, {:lookup_quiz_by_title, quiz_title})
   end
+
+  def start_link(options \\ []) do
+    GenServer.start(__MODULE__, %{}, options)
+  end
 end
