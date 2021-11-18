@@ -47,4 +47,8 @@ defmodule Mastery.Boundary.QuizManager do
   def start_link(options \\ []) do
     GenServer.start(__MODULE__, %{}, options)
   end
+
+  def remove_quiz(manager \\ __MODULE__, quiz_title) do
+    GenServer.call(manager, {:remove_quiz, quiz_title})
+  end
 end

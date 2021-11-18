@@ -2,6 +2,9 @@ defmodule Mastery do
   alias Mastery.Boundary.{QuizSession, QuizManager}
   alias Mastery.Boundary.{TemplateValidator, QuizValidator}
   alias Mastery.Core.Quiz
+  alias Mastery.Boundary.Proctor
+
+  @persistence_fn Application.get_env(:mastery, :persistence_fn)
 
   def start_quiz_manager() do
     GenServer.start_link(QuizManager, %{}, name: QuizManager)
@@ -34,7 +37,16 @@ defmodule Mastery do
     GenServer.call(session, :select_question)
   end
 
-  def answer_question(session, answer) do
-    GenServer.call(session, {:answer_question, answer})
+  # session might be changed to name
+  def answer_question(name, answer, persistence_fn \\ @persistence_fn) do
+    QuizSession.answer_question(name, answer, persistence_fn)
+  end
+
+  def schedule_quiz(quiz, templates, start_at, end_at) do
+    with :ok <- QuizValidator.errors(quiz),
+         true <- Enum.all?(templates, &(:ok == TemplateValidator.errors(&1))),
+         :ok <- Proctor.schedule_quiz(quiz, templates, start_at, end_at),
+         do: :ok,
+         else: (error -> error)
   end
 end

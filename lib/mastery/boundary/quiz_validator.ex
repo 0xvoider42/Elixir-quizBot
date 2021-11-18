@@ -7,7 +7,7 @@ defmodule Mastery.Boundary.QuizValidator do
     |> optional(fields, :mastery, &validate_mastery/1)
   end
 
-  def errors(_fields), do: [{nil, "A map of fields id required"}]
+  def errors(_fields), do: [{nil, "A map of fields is required"}]
 
   def validate_title(title) when is_binary(title) do
     check(String.match?(title, ~r{\S}), {:error, "can't be blank"})
